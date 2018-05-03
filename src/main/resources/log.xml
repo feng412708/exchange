@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/' >
+
+    <!-- catalina.out -->
+    <appender name="consoleAppend" class="org.apache.log4j.ConsoleAppender" >
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%-d{yyyy-MM-dd HH:mm:ss} [%5p][%t][%c{1}]-[%M] %m%n" />
+        </layout>
+    </appender>
+
+    <appender name="fileAppender" class="org.apache.log4j.RollingFileAppender">
+        <param name="File" value="${webapp.root}logs/log.log"/>
+        <param name="Append" value="true" />  <!-- 是否项目重启继续保存之前日志 -->
+        <param name="Encoding" value="UTF-8"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p %m (%F:%M:%L)%n"/>
+        </layout>
+    </appender>
+
+    <!-- 下面是打印通过log4j2打印出mybatis语句的配置-->
+    <logger name="com.mytrans.exchange.dao">
+        <level value="DEBUG"/>
+    </logger>
+
+    <root>
+        <!--<priority value="DEBUG" />-->
+        <priority value="INFO" />
+        <!-- 将 logger 中 additivity=true 的日志或者没有指定<logger>的append输出到控制台 -->
+        <appender-ref ref="consoleAppend" />
+        <appender-ref ref="fileAppender" />
+    </root>
+
+
+</log4j:configuration>
